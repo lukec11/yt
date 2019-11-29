@@ -1,9 +1,10 @@
 import json
 import os
 import requests
+import asyncio
+import time
 
-#Temporary - permanently set songlink url;
-#songlinkurl = 'https://song.link/us/i/466988833'
+count=0
 
 def getSong(songlinkurl):
     #From song.link
@@ -27,6 +28,11 @@ def getSong(songlinkurl):
 with open ("songs.json") as s:
     s = json.load(s)
     for i in (s):
+        if (count >= 10):
+            print("sleeping.")
+            time.sleep(60)
+            count = 0
+        count+=1
         try:
             getSong(i)
         except: 

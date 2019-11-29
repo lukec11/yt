@@ -22,7 +22,7 @@ def getSong(songlinkurl):
 
     print (("Retreiving %s by %s.") %(title, artist))
 
-    os.system(('youtube-dl --quiet https://www.youtube.com/watch?v={} -x --audio-format mp3 --output \"{} - {}.%(ext)s"').format(ytid, artist, title))
+    os.system(('youtube-dl --quiet https://www.youtube.com/watch?v={} -x --audio-format mp3 --output \"output/{} - {}.%(ext)s"').format(ytid, artist, title))
 
 with open ("songs.json") as s:
     s = json.load(s)

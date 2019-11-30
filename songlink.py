@@ -1,10 +1,9 @@
 import json
 import os
 import requests
-import asyncio
 import time
 
-count=0
+count = 0
 
 def getSong(songlinkurl):
     #From song.link
@@ -21,19 +20,20 @@ def getSong(songlinkurl):
     artist = str(suid.get('artistName')) #Pulls artist name
     title = str(suid.get('title')) #Pulls song name
 
-    print (("Retreiving %s by %s.") %(title, artist))
+    print(("Retreiving {} by {}.").format(title, artist))
 
     os.system(('youtube-dl --quiet https://www.youtube.com/watch?v={} -x --audio-format mp3 --output \"output/{} - {}.%(ext)s"').format(ytid, artist, title))
 
-with open ("songs.json") as s:
-    s = json.load(s)
-    for i in (s):
-        if (count >= 10):
-            print("sleeping.")
-            time.sleep(60)
-            count = 0
-        count+=1
-        try:
-            getSong(i)
-        except: 
-            print (("Song {} unavailable. Retry manually.").format(i))
+with open ("songs.json") as f:
+    s = json.load(f)
+for i in s:
+    if count >= 10:
+        print("Sleeping.")
+        time.sleep(60)
+        count = 0
+    count += 1
+    
+    try:
+        getSong(i)
+    except: 
+        print (("Song {} unavailable. Retry manually.").format(i))

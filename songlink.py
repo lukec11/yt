@@ -7,7 +7,7 @@ count = 0
 
 def getSong(songlinkurl):
     #From song.link
-    request = (requests.get('https://api.song.link/v1-alpha.1/links?url=%s'  % (str(songlinkurl)) ).content)
+    request = (requests.get('https://api.song.link/v1-alpha.1/links?url=%s'.format(str(songlinkurl)) ).content)
 
     links = json.loads(request)
     youtube = links.get('linksByPlatform').get('youtube')

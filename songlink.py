@@ -3,6 +3,7 @@ import os
 import requests
 import time
 
+
 count = 0
 
 def getSong(songlinkurl):
@@ -10,23 +11,24 @@ def getSong(songlinkurl):
     request = (requests.get('https://api.song.link/v1-alpha.1/links?url=%s'.format(str(songlinkurl)) ).content)
 
     links = json.loads(request)
-    youtube = links.get('linksByPlatform').get('youtube')
-    spotify = links.get('linksByPlatform').get('spotify')
-    suid = links.get('entitiesByUniqueId').get(spotify.get('entityUniqueId'))
-    yuid = links.get('entitiesByUniqueId').get(youtube.get('entityUniqueId'))
-    ytid = str(yuid.get('id'))
-    url = str(youtube.get('url'))
 
-    artist = str(suid.get('artistName')) #Pulls artist name
-    title = str(suid.get('title')) #Pulls song name
+    youtube = links['linksByPlatform']['youtube']
+    spotify = links['linksByPlatform']['spotify']
+    suid = links['entitiesByUniqueId')[spotify['entityUniqueId']
+    yuid = links.get('entitiesByUniqueId')[(youtube['entityUniqueId']]
+    ytid = str(yuid['id'])
+    url = str(youtube['url'])
 
-    print(("Retreiving {} by {}.").format(title, artist))
+    artist = str(suid['artistName']) #Pulls artist name
+    title = str(suid['title']) #Pulls song name
 
-    os.system(('youtube-dl --quiet https://www.youtube.com/watch?v={} -x --audio-format mp3 --output \"output/{} - {}.%(ext)s"').format(ytid, artist, title))
+    print(f"Retreiving {title} by {artist}.")
+
+    os.system((f'youtube-dl --quiet https://www.youtube.com/watch?v={ytid} -x --audio-format mp3 --output \"output/{artist} - {title}.%(ext)s"')
 
 with open ("songs.json") as f:
     s = json.load(f)
-for i in s:
+for i in s: #this is a crude counter that works to combat Odesli API limits.
     if count >= 10:
         print("Sleeping.")
         time.sleep(60)
@@ -36,4 +38,4 @@ for i in s:
     try:
         getSong(i)
     except: 
-        print (("Song {} unavailable. Retry manually.").format(i))
+        print ((f"Song {i} unavailable. Retry manually.")
